@@ -38,18 +38,11 @@
 
         .form-group { margin-bottom: 16px; }
         label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500; color: var(--text-dark); }
-        input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="tel"], textarea { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1rem; background-color: var(--card-bg); color: var(--text-dark); }
+        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="time"], input[type="number"], input[type="tel"], textarea { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1rem; background-color: var(--card-bg); color: var(--text-dark); }
         
-        /* Modern File Upload UI */
         .file-upload-wrapper { position: relative; margin-bottom: 8px; }
         .file-upload-input { display: none; }
-        .file-upload-label { 
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            background-color: var(--nav-bg); color: var(--primary); 
-            border: 2px dashed var(--primary); border-radius: 8px; 
-            padding: 14px; cursor: pointer; font-weight: bold; font-size: 1rem;
-            transition: all 0.2s ease; text-align: center; margin: 0;
-        }
+        .file-upload-label { display: flex; align-items: center; justify-content: center; gap: 8px; background-color: var(--nav-bg); color: var(--primary); border: 2px dashed var(--primary); border-radius: 8px; padding: 14px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: all 0.2s ease; text-align: center; margin: 0; }
         .file-upload-label:hover { background-color: var(--primary); color: #FFF; border-style: solid; }
         .file-name-display { display: block; font-size: 0.85rem; color: var(--text-light); text-align: center; margin-top: 4px; min-height: 18px; }
 
@@ -73,7 +66,6 @@
         .item-meta { font-size: 0.9rem; color: var(--text-light); margin-bottom: 8px; }
         .item-notes { background-color: var(--kardex-bg); padding: 10px; border-radius: 6px; font-size: 0.95rem; margin-top: 8px; border-left: 2px solid var(--text-light); white-space: pre-wrap; }
 
-        .med-reason-badge { display: inline-block; background-color: var(--border-color); color: var(--text-dark); font-size: 0.85rem; font-weight: bold; padding: 2px 10px; border-radius: 12px; margin-bottom: 12px; }
         .kardex-grid { display: flex; gap: 8px; margin-bottom: 12px; }
         .kardex-box { flex: 1; background-color: var(--kardex-bg); border: 1px solid var(--border-color); border-radius: 6px; text-align: center; padding: 8px 4px; }
         .kardex-box span.time { display: block; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 2px; }
@@ -81,6 +73,7 @@
         .kardex-box span.unit-dose { display: block; font-size: 0.75rem; color: var(--primary); font-weight: 600; margin-top: 4px; min-height: 14px; }
         .prn-badge { background-color: var(--warning); color: #000; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; vertical-align: middle; margin-left: 8px; }
         .prn-display-box { background-color: var(--warning); color: #000; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.95rem; font-weight: bold; }
+        .med-reason-badge { display: inline-block; background-color: var(--border-color); color: var(--text-dark); font-size: 0.85rem; font-weight: bold; padding: 2px 10px; border-radius: 12px; margin-bottom: 12px; }
         
         .delete-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-light); font-size: 1.4rem; cursor: pointer; width: auto; padding: 0; }
         .delete-btn:hover { color: var(--danger); }
@@ -89,190 +82,207 @@
         .empty-state { text-align: center; color: var(--text-light); font-style: italic; padding: 20px; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; font-weight: bold; cursor: pointer; background: var(--nav-bg); padding: 12px; border-radius: 6px; color: var(--primary); border: 1px solid var(--border-color); margin-bottom: 16px; }
         .checkbox-label input { width: auto; margin: 0; transform: scale(1.2); }
-        
         .attachment-btn { display:inline-block; background:var(--nav-bg); padding:8px 12px; border-radius:6px; color:var(--primary); text-decoration:none; font-size:0.85rem; font-weight:bold; border: 1px solid var(--border-color); margin-top: 10px;}
         .attachment-btn:hover { background: var(--border-color); }
+        
+        /* Login Specifics */
+        .login-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; }
+        .login-card { width: 100%; text-align: center; }
+        .login-error { color: var(--danger); font-size: 0.9rem; margin-bottom: 12px; min-height: 20px; font-weight: bold;}
     </style>
 </head>
 <body>
 
     <header>
         <h1>MedRx</h1>
-        <button id="themeToggle" class="theme-toggle" onclick="window.toggleTheme()">🌙 Dark Mode</button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <button id="themeToggle" class="theme-toggle" onclick="window.toggleTheme()">🌙</button>
+            <button id="logoutBtn" class="theme-toggle hidden" onclick="window.logout()">Log Out</button>
+        </div>
     </header>
 
-    <div class="family-tabs" id="familyTabs">
-        <div class="family-tab active" onclick="window.switchProfile('Aaron')">Aaron</div>
-        <div class="family-tab" onclick="window.switchProfile('Ruth')">Ruth</div>
-        <div class="family-tab" onclick="window.switchProfile('Mia')">Mia</div>
-        <div class="family-tab" onclick="window.switchProfile('Jamie')">Jamie</div>
-    </div>
-
-    <!-- Status Indicator -->
-    <div id="cloud-status" style="text-align: center; font-size: 0.8rem; font-weight: bold; color: var(--primary); margin-bottom: 16px;">
-        Connecting to cloud...
-    </div>
-
-    <main>
-        <!-- ================= SETUP VIEW ================= -->
-        <section id="view-setup" class="card hidden">
-            <h2><span id="setup-name-display"></span>'s Details</h2>
-            <form id="patientForm">
-                <div class="form-group"><label>Full Name</label><input type="text" id="patName" required></div>
-                <div style="display: flex; gap: 12px;">
-                    <div class="form-group" style="flex: 1;"><label>Date of Birth</label><input type="date" id="patDOB" required></div>
-                    <div class="form-group" style="flex: 1;"><label>Eircode</label><input type="text" id="patEircode" placeholder="A65 F4E2"></div>
-                </div>
-                <div class="form-group"><label>GP / Clinic</label><input type="text" id="patGP"></div>
-                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
-                <label style="font-weight: bold; color: var(--primary);">Emergency Contact</label>
-                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                    <div class="form-group" style="flex: 1; margin-bottom: 0;"><input type="text" id="patContactName" placeholder="Name"></div>
-                    <div class="form-group" style="flex: 1; margin-bottom: 0;"><input type="tel" id="patContactPhone" placeholder="Number"></div>
-                </div>
-                <div class="form-group"><label>Known Allergies (Leave blank if none)</label><input type="text" id="patAllergies" placeholder="e.g., Penicillin"></div>
-                <button type="submit">Save Profile to Cloud</button>
+    <!-- ================= LOGIN VIEW ================= -->
+    <div id="view-login" class="login-wrapper hidden">
+        <div class="card login-card">
+            <h2 style="border:none; margin-bottom: 8px;">Family Login</h2>
+            <p style="color: var(--text-light); margin-bottom: 24px; font-size: 0.95rem;">Secure access to MedRx.</p>
+            <form id="loginForm">
+                <div class="form-group"><input type="email" id="loginEmail" placeholder="Email" required></div>
+                <div class="form-group"><input type="password" id="loginPassword" placeholder="Password" required></div>
+                <div id="loginError" class="login-error"></div>
+                <button type="submit">Unlock App</button>
             </form>
-        </section>
+        </div>
+    </div>
 
-        <!-- ================= SPLASH / HOME VIEW ================= -->
-        <section id="view-splash" class="hidden">
-            <div class="card">
-                <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px;">
-                    <h2 id="display-name" style="margin:0; color: var(--primary); border:none; padding:0;">Loading...</h2>
-                    <span id="display-dob" style="color: var(--text-light);">DOB: </span><br>
-                    <div id="display-eircode" class="eircode-badge hidden"></div>
-                </div>
-                <div class="info-grid">
-                    <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">GP</span><br><strong id="display-gp"></strong></div>
-                    <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">Contact</span><br><strong id="display-contact-name"></strong><br><a id="display-contact-phone" style="color: var(--primary); text-decoration: none;"></a></div>
-                </div>
-                <div id="display-allergies" class="alert-box hidden"></div>
-                <button onclick="window.navigate('view-setup')" class="btn-secondary" style="width:100%;">Edit Details</button>
-            </div>
+    <!-- Main App Container (Hidden until logged in) -->
+    <div id="app-container" class="hidden">
+        <div class="family-tabs" id="familyTabs">
+            <div class="family-tab active" onclick="window.switchProfile('Aaron')">Aaron</div>
+            <div class="family-tab" onclick="window.switchProfile('Ruth')">Ruth</div>
+            <div class="family-tab" onclick="window.switchProfile('Mia')">Mia</div>
+            <div class="family-tab" onclick="window.switchProfile('Jamie')">Jamie</div>
+        </div>
 
-            <div class="nav-grid">
-                <div class="nav-card" onclick="window.navigate('view-meds')">💊 Meds & Past History</div>
-                <div class="nav-card" onclick="window.navigate('view-bloods')" style="background-color: #8E44AD;">🩸 Recent Bloods</div>
-                <div class="nav-card" onclick="window.navigate('view-appts')" style="background-color: #27AE60;">🏥 Hospital Appointments</div>
-            </div>
-        </section>
+        <div id="cloud-status" style="text-align: center; font-size: 0.8rem; font-weight: bold; color: var(--primary); margin-bottom: 16px;">
+            Connecting to cloud...
+        </div>
 
-        <!-- ================= TAB: MEDS & HISTORY ================= -->
-        <section id="view-meds" class="hidden">
-            <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
-            
-            <div class="card">
-                <h2>Medical Conditions Gallery</h2>
-                <div class="form-group">
-                    <label>Add Condition & Optional Photo</label>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <input type="text" id="conditionInput" placeholder="e.g. Eczema, Asthma">
-                        
-                        <div class="file-upload-wrapper">
-                            <input type="file" id="conditionFile" class="file-upload-input" accept="image/*" onchange="window.updateFileName(this, 'conditionFileName')">
-                            <label for="conditionFile" class="file-upload-label">📸 Tap to Add Photo</label>
-                            <span id="conditionFileName" class="file-name-display"></span>
-                        </div>
-
-                        <button type="button" onclick="window.addCondition()">Add to History</button>
-                    </div>
-                </div>
-                <div id="conditionsListForm" class="item-list" style="margin-top: 16px;"></div>
-            </div>
-
-            <h2>Current Medications</h2>
-            <div id="med-list" class="item-list"></div>
-
-            <div class="card">
-                <h2>Add Medication</h2>
-                <form id="medForm">
-                    <div class="form-group"><label>Medication Name</label><input type="text" id="medName" required></div>
-                    <div class="form-group"><label>Used for</label><input type="text" id="medReason" required></div>
-                    
-                    <div class="form-group">
-                        <label>Photo of Medication / Box (Optional)</label>
-                        <div class="file-upload-wrapper">
-                            <input type="file" id="medFile" class="file-upload-input" accept="image/*" onchange="window.updateFileName(this, 'medFileName')">
-                            <label for="medFile" class="file-upload-label">📸 Tap to Photo</label>
-                            <span id="medFileName" class="file-name-display"></span>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                        <div class="form-group" style="flex: 1;"><label>Dose/Tab</label><input type="text" id="medDose" required></div>
-                        <div class="form-group" style="flex: 1;"><label>Total Daily</label><input type="text" id="medTotal"></div>
-                    </div>
-                    <label class="checkbox-label"><input type="checkbox" id="medIsPRN"> This is a PRN (As Needed) medication</label>
-                    <div id="scheduled-inputs">
-                        <label style="font-weight: bold; margin-bottom: 10px;">Tabs taken at:</label>
-                        <div class="kardex-inputs">
-                            <div><label>Morn</label><input type="number" id="medMorn" min="0" step="0.5" value="0"></div>
-                            <div><label>Aft</label><input type="number" id="medAft" min="0" step="0.5" value="0"></div>
-                            <div><label>Eve</label><input type="number" id="medEve" min="0" step="0.5" value="0"></div>
-                            <div><label>Night</label><input type="number" id="medNight" min="0" step="0.5" value="0"></div>
-                        </div>
-                    </div>
-                    <div id="prn-inputs" class="hidden form-group">
-                        <label>PRN Instructions</label><input type="text" id="medPrnInstructions" placeholder="e.g., 1-2 tabs every 4-6 hours">
-                    </div>
-                    <button type="submit">+ Add Medication</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- ================= TAB: BLOOD TESTS ================= -->
-        <section id="view-bloods" class="hidden">
-            <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
-            <h2>Recent Blood Tests</h2>
-            <div id="blood-list" class="item-list"></div>
-            <div class="card">
-                <h2>Add Blood Test</h2>
-                <form id="bloodForm">
-                    <div class="form-group"><label>Date of Test</label><input type="date" id="bloodDate" required></div>
-                    <div class="form-group"><label>Test Type / Panel</label><input type="text" id="bloodType" placeholder="e.g., Full Blood Count" required></div>
-                    
-                    <div class="form-group">
-                        <label>Attach PDF or Photo of Results (Optional)</label>
-                        <div class="file-upload-wrapper">
-                            <input type="file" id="bloodFile" class="file-upload-input" accept="image/*,application/pdf" onchange="window.updateFileName(this, 'bloodFileName')">
-                            <label for="bloodFile" class="file-upload-label">📎 Tap to Attach File</label>
-                            <span id="bloodFileName" class="file-name-display"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group"><label>Notes (or Paste AI Table)</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Doctor said Iron is improving."></textarea></div>
-                    <button type="submit">+ Add Record</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- ================= TAB: APPOINTMENTS ================= -->
-        <section id="view-appts" class="hidden">
-            <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
-            <h2>Hospital Appointments</h2>
-            <div id="appt-list" class="item-list"></div>
-            <div class="card">
-                <h2>Add Appointment</h2>
-                <form id="apptForm">
+        <main>
+            <!-- ================= SETUP VIEW ================= -->
+            <section id="view-setup" class="card hidden">
+                <h2><span id="setup-name-display"></span>'s Details</h2>
+                <form id="patientForm">
+                    <div class="form-group"><label>Full Name</label><input type="text" id="patName" required></div>
                     <div style="display: flex; gap: 12px;">
-                        <div class="form-group" style="flex: 2;"><label>Date</label><input type="date" id="apptDate" required></div>
-                        <div class="form-group" style="flex: 1;"><label>Time</label><input type="time" id="apptTime"></div>
+                        <div class="form-group" style="flex: 1;"><label>Date of Birth</label><input type="date" id="patDOB" required></div>
+                        <div class="form-group" style="flex: 1;"><label>Eircode</label><input type="text" id="patEircode" placeholder="A65 F4E2"></div>
                     </div>
-                    <div class="form-group"><label>Hospital / Clinic</label><input type="text" id="apptLocation" required></div>
-                    <div class="form-group"><label>Consultant / Dept</label><input type="text" id="apptDept"></div>
-                    <div class="form-group"><label>Notes</label><textarea id="apptNotes" rows="2"></textarea></div>
-                    <button type="submit">+ Add Appointment</button>
+                    <div class="form-group"><label>GP / Clinic</label><input type="text" id="patGP"></div>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+                    <label style="font-weight: bold; color: var(--primary);">Emergency Contact</label>
+                    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                        <div class="form-group" style="flex: 1; margin-bottom: 0;"><input type="text" id="patContactName" placeholder="Name"></div>
+                        <div class="form-group" style="flex: 1; margin-bottom: 0;"><input type="tel" id="patContactPhone" placeholder="Number"></div>
+                    </div>
+                    <div class="form-group"><label>Known Allergies</label><input type="text" id="patAllergies" placeholder="e.g., Penicillin"></div>
+                    <button type="submit">Save Profile to Cloud</button>
                 </form>
-            </div>
-        </section>
-    </main>
+            </section>
+
+            <!-- ================= SPLASH / HOME VIEW ================= -->
+            <section id="view-splash" class="hidden">
+                <div class="card">
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px;">
+                        <h2 id="display-name" style="margin:0; color: var(--primary); border:none; padding:0;">Loading...</h2>
+                        <span id="display-dob" style="color: var(--text-light);">DOB: </span><br>
+                        <div id="display-eircode" class="eircode-badge hidden"></div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">GP</span><br><strong id="display-gp"></strong></div>
+                        <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">Contact</span><br><strong id="display-contact-name"></strong><br><a id="display-contact-phone" style="color: var(--primary); text-decoration: none;"></a></div>
+                    </div>
+                    <div id="display-allergies" class="alert-box hidden"></div>
+                    <button onclick="window.navigate('view-setup')" class="btn-secondary" style="width:100%;">Edit Details</button>
+                </div>
+
+                <div class="nav-grid">
+                    <div class="nav-card" onclick="window.navigate('view-meds')">💊 Meds & Past History</div>
+                    <div class="nav-card" onclick="window.navigate('view-bloods')" style="background-color: #8E44AD;">🩸 Recent Bloods</div>
+                    <div class="nav-card" onclick="window.navigate('view-appts')" style="background-color: #27AE60;">🏥 Hospital Appointments</div>
+                </div>
+            </section>
+
+            <!-- ================= TAB: MEDS & HISTORY ================= -->
+            <section id="view-meds" class="hidden">
+                <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
+                <div class="card">
+                    <h2>Medical Conditions Gallery</h2>
+                    <div class="form-group">
+                        <label>Add Condition & Optional Photo</label>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <input type="text" id="conditionInput" placeholder="e.g. Eczema, Asthma">
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="conditionFile" class="file-upload-input" accept="image/*" onchange="window.updateFileName(this, 'conditionFileName')">
+                                <label for="conditionFile" class="file-upload-label">📸 Tap to Add Photo</label>
+                                <span id="conditionFileName" class="file-name-display"></span>
+                            </div>
+                            <button type="button" onclick="window.addCondition()">Add to History</button>
+                        </div>
+                    </div>
+                    <div id="conditionsListForm" class="item-list" style="margin-top: 16px;"></div>
+                </div>
+
+                <h2>Current Medications</h2>
+                <div id="med-list" class="item-list"></div>
+
+                <div class="card">
+                    <h2>Add Medication</h2>
+                    <form id="medForm">
+                        <div class="form-group"><label>Medication Name</label><input type="text" id="medName" required></div>
+                        <div class="form-group"><label>Used for</label><input type="text" id="medReason" required></div>
+                        <div class="form-group">
+                            <label>Photo of Medication / Box (Optional)</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="medFile" class="file-upload-input" accept="image/*" onchange="window.updateFileName(this, 'medFileName')">
+                                <label for="medFile" class="file-upload-label">📸 Tap to Photo</label>
+                                <span id="medFileName" class="file-name-display"></span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                            <div class="form-group" style="flex: 1;"><label>Dose/Tab</label><input type="text" id="medDose" required></div>
+                            <div class="form-group" style="flex: 1;"><label>Total Daily</label><input type="text" id="medTotal"></div>
+                        </div>
+                        <label class="checkbox-label"><input type="checkbox" id="medIsPRN"> This is a PRN (As Needed) medication</label>
+                        <div id="scheduled-inputs">
+                            <label style="font-weight: bold; margin-bottom: 10px;">Tabs taken at:</label>
+                            <div class="kardex-inputs">
+                                <div><label>Morn</label><input type="number" id="medMorn" min="0" step="0.5" value="0"></div>
+                                <div><label>Aft</label><input type="number" id="medAft" min="0" step="0.5" value="0"></div>
+                                <div><label>Eve</label><input type="number" id="medEve" min="0" step="0.5" value="0"></div>
+                                <div><label>Night</label><input type="number" id="medNight" min="0" step="0.5" value="0"></div>
+                            </div>
+                        </div>
+                        <div id="prn-inputs" class="hidden form-group">
+                            <label>PRN Instructions</label><input type="text" id="medPrnInstructions" placeholder="e.g., 1-2 tabs every 4-6 hours">
+                        </div>
+                        <button type="submit">+ Add Medication</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ================= TAB: BLOOD TESTS ================= -->
+            <section id="view-bloods" class="hidden">
+                <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
+                <h2>Recent Blood Tests</h2>
+                <div id="blood-list" class="item-list"></div>
+                <div class="card">
+                    <h2>Add Blood Test</h2>
+                    <form id="bloodForm">
+                        <div class="form-group"><label>Date of Test</label><input type="date" id="bloodDate" required></div>
+                        <div class="form-group"><label>Test Type / Panel</label><input type="text" id="bloodType" placeholder="e.g., Full Blood Count" required></div>
+                        <div class="form-group">
+                            <label>Attach PDF or Photo of Results (Optional)</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="bloodFile" class="file-upload-input" accept="image/*,application/pdf" onchange="window.updateFileName(this, 'bloodFileName')">
+                                <label for="bloodFile" class="file-upload-label">📎 Tap to Attach File</label>
+                                <span id="bloodFileName" class="file-name-display"></span>
+                            </div>
+                        </div>
+                        <div class="form-group"><label>Notes (or Paste AI Table)</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Doctor said Iron is improving."></textarea></div>
+                        <button type="submit">+ Add Record</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ================= TAB: APPOINTMENTS ================= -->
+            <section id="view-appts" class="hidden">
+                <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
+                <h2>Hospital Appointments</h2>
+                <div id="appt-list" class="item-list"></div>
+                <div class="card">
+                    <h2>Add Appointment</h2>
+                    <form id="apptForm">
+                        <div style="display: flex; gap: 12px;">
+                            <div class="form-group" style="flex: 2;"><label>Date</label><input type="date" id="apptDate" required></div>
+                            <div class="form-group" style="flex: 1;"><label>Time</label><input type="time" id="apptTime"></div>
+                        </div>
+                        <div class="form-group"><label>Hospital / Clinic</label><input type="text" id="apptLocation" required></div>
+                        <div class="form-group"><label>Consultant / Dept</label><input type="text" id="apptDept"></div>
+                        <div class="form-group"><label>Notes</label><textarea id="apptNotes" rows="2"></textarea></div>
+                        <button type="submit">+ Add Appointment</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <!-- FIREBASE AND APP LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDdfcHazK_TTmNoLByjab9Aegxkd_ve2vo",
@@ -286,6 +296,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const storage = getStorage(app);
+        const auth = getAuth(app);
 
         let currentProfile = 'Aaron';
         let patientData = null;
@@ -300,13 +311,8 @@
 
         window.toggleTheme = function() {
             isDark = !isDark;
-            if(isDark) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('MedRx_theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('MedRx_theme', 'light');
-            }
+            if(isDark) { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('MedRx_theme', 'dark'); } 
+            else { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('MedRx_theme', 'light'); }
         };
 
         window.navigate = function(targetView) {
@@ -318,32 +324,50 @@
         window.switchProfile = function(name) {
             currentProfile = name;
             document.querySelectorAll('.family-tab').forEach(tab => {
-                if(tab.innerText === name) tab.classList.add('active');
-                else tab.classList.remove('active');
+                if(tab.innerText === name) tab.classList.add('active'); else tab.classList.remove('active');
             });
             loadProfileDataFromCloud();
         };
 
-        // --- UI HELPER: Update File Name Display ---
         window.updateFileName = function(input, displayId) {
             const display = document.getElementById(displayId);
-            if (input.files && input.files.length > 0) {
-                display.textContent = "✅ " + input.files[0].name;
-                display.style.color = "var(--success)";
-            } else {
-                display.textContent = "";
-            }
+            if (input.files && input.files.length > 0) { display.textContent = "✅ " + input.files[0].name; display.style.color = "var(--success)"; } 
+            else { display.textContent = ""; }
         };
 
-        // --- CLOUD SYNC & FILE UPLOAD ---
-        async function saveToCloud(key, data) {
-            try {
-                await setDoc(doc(db, "familyProfiles", currentProfile), { [key]: data }, { merge: true });
-                document.getElementById('cloud-status').textContent = "Synced ☁️";
-            } catch(e) {
-                console.error(e);
-                document.getElementById('cloud-status').textContent = "⚠️ Save failed.";
+        // --- AUTHENTICATION LOGIC ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Logged In
+                document.getElementById('view-login').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
+                document.getElementById('logoutBtn').classList.remove('hidden');
+                loadProfileDataFromCloud();
+            } else {
+                // Logged Out
+                document.getElementById('app-container').classList.add('hidden');
+                document.getElementById('logoutBtn').classList.add('hidden');
+                document.getElementById('view-login').classList.remove('hidden');
             }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            document.getElementById('loginError').textContent = "Logging in...";
+            
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => { document.getElementById('loginError').textContent = ""; })
+                .catch((error) => { document.getElementById('loginError').textContent = "⚠️ Incorrect email or password."; });
+        });
+
+        window.logout = function() { signOut(auth); };
+
+        // --- CLOUD SYNC ---
+        async function saveToCloud(key, data) {
+            try { await setDoc(doc(db, "familyProfiles", currentProfile), { [key]: data }, { merge: true }); document.getElementById('cloud-status').textContent = "Synced ☁️"; } 
+            catch(e) { console.error(e); document.getElementById('cloud-status').textContent = "⚠️ Save failed."; }
         }
 
         async function uploadFile(file, folder) {
@@ -358,25 +382,17 @@
         async function loadProfileDataFromCloud() {
             document.getElementById('cloud-status').textContent = "Syncing from cloud...";
             document.getElementById('display-name').textContent = "Loading " + currentProfile + "...";
-            
             try {
                 const docSnap = await getDoc(doc(db, "familyProfiles", currentProfile));
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    patientData = data.patientData || null;
-                    medications = data.medications || [];
-                    bloods = data.bloods || [];
-                    appts = data.appts || [];
+                    patientData = data.patientData || null; medications = data.medications || [];
+                    bloods = data.bloods || []; appts = data.appts || [];
                     let rawConditions = data.conditions || [];
                     patientConditions = rawConditions.map(c => typeof c === 'string' ? { id: Date.now()+Math.random(), name: c, fileUrl: null } : c);
-                } else {
-                    patientData = null; medications = []; bloods = []; appts = []; patientConditions = [];
-                }
+                } else { patientData = null; medications = []; bloods = []; appts = []; patientConditions = []; }
                 document.getElementById('cloud-status').textContent = "Synced ☁️";
-            } catch(e) {
-                console.error(e);
-                document.getElementById('cloud-status').textContent = "⚠️ Offline mode";
-            }
+            } catch(e) { console.error(e); document.getElementById('cloud-status').textContent = "⚠️ Offline mode"; }
 
             if (patientData) {
                 populateSplash();
@@ -394,11 +410,7 @@
                 document.getElementById('setup-name-display').textContent = currentProfile;
                 window.navigate('view-setup');
             }
-
-            renderConditions();
-            renderMedications();
-            renderBloods();
-            renderAppts();
+            renderConditions(); renderMedications(); renderBloods(); renderAppts();
         }
 
         function populateSplash() {
@@ -411,13 +423,8 @@
             const eircodeBox = document.getElementById('display-eircode');
             if (patientData.eircode && patientData.eircode.trim()) { eircodeBox.textContent = `📍 Eircode: ${patientData.eircode}`; eircodeBox.classList.remove('hidden'); } else { eircodeBox.classList.add('hidden'); }
             const allergyBox = document.getElementById('display-allergies');
-            if (patientData.allergies && patientData.allergies.trim()) {
-                allergyBox.innerHTML = `⚠️ Allergies: ${patientData.allergies}`;
-                allergyBox.className = 'alert-box allergy-alert';
-            } else {
-                allergyBox.innerHTML = `✔️ No Known Allergies`;
-                allergyBox.className = 'alert-box allergy-clear';
-            }
+            if (patientData.allergies && patientData.allergies.trim()) { allergyBox.innerHTML = `⚠️ Allergies: ${patientData.allergies}`; allergyBox.className = 'alert-box allergy-alert'; } 
+            else { allergyBox.innerHTML = `✔️ No Known Allergies`; allergyBox.className = 'alert-box allergy-clear'; }
         }
 
         document.getElementById('patientForm').addEventListener('submit', function(e) {
@@ -425,111 +432,52 @@
             const dobRaw = document.getElementById('patDOB').value;
             const parts = dobRaw.split('-');
             const dobFormatted = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dobRaw;
-
-            patientData = {
-                name: document.getElementById('patName').value,
-                dobRaw: dobRaw, dobFormatted: dobFormatted,
-                eircode: document.getElementById('patEircode').value,
-                gp: document.getElementById('patGP').value || 'Not provided',
-                contactName: document.getElementById('patContactName').value || 'Not provided',
-                contactPhone: document.getElementById('patContactPhone').value || '',
-                allergies: document.getElementById('patAllergies').value
-            };
-            saveToCloud('patientData', patientData);
-            populateSplash();
-            window.navigate('view-splash');
+            patientData = { name: document.getElementById('patName').value, dobRaw: dobRaw, dobFormatted: dobFormatted, eircode: document.getElementById('patEircode').value, gp: document.getElementById('patGP').value || 'Not provided', contactName: document.getElementById('patContactName').value || 'Not provided', contactPhone: document.getElementById('patContactPhone').value || '', allergies: document.getElementById('patAllergies').value };
+            saveToCloud('patientData', patientData); populateSplash(); window.navigate('view-splash');
         });
 
-        // --- CONDITIONS (GALLERY) ---
+        // --- CONDITIONS ---
         window.addCondition = async function() {
-            const input = document.getElementById('conditionInput');
-            const fileInput = document.getElementById('conditionFile');
-            const val = input.value.trim();
-            const file = fileInput.files[0];
-            
+            const input = document.getElementById('conditionInput'); const fileInput = document.getElementById('conditionFile');
+            const val = input.value.trim(); const file = fileInput.files[0];
             if (val || file) {
                 document.getElementById('cloud-status').textContent = "Uploading file... Please wait.";
-                let fileUrl = null;
-                if(file) fileUrl = await uploadFile(file, 'conditions');
-                
+                let fileUrl = null; if(file) fileUrl = await uploadFile(file, 'conditions');
                 patientConditions.push({ id: Date.now(), name: val || 'Condition / Note', fileUrl: fileUrl });
-                renderConditions();
-                saveToCloud('conditions', patientConditions);
+                renderConditions(); saveToCloud('conditions', patientConditions);
                 input.value = ''; fileInput.value = ''; document.getElementById('conditionFileName').textContent = '';
             }
         }
-
-        window.removeCondition = function(id) {
-            patientConditions = patientConditions.filter(c => c.id !== id);
-            renderConditions();
-            saveToCloud('conditions', patientConditions);
-        }
-
+        window.removeCondition = function(id) { patientConditions = patientConditions.filter(c => c.id !== id); renderConditions(); saveToCloud('conditions', patientConditions); }
         function renderConditions() {
             const container = document.getElementById('conditionsListForm');
             container.innerHTML = patientConditions.length === 0 ? '<span style="color:var(--text-light);font-size:0.9rem;">No conditions logged.</span>' : '';
             patientConditions.forEach((cond) => {
                 let attachHtml = cond.fileUrl ? `<br><a href="${cond.fileUrl}" class="attachment-btn" target="_blank">📷 View Photo</a>` : '';
-                container.innerHTML += `
-                    <div class="list-item" style="padding:14px;">
-                        <button class="delete-btn" onclick="window.removeCondition(${cond.id})">×</button>
-                        <div style="font-weight:bold; font-size:1.1rem; color:var(--primary); padding-right: 20px;">${cond.name}</div>
-                        ${attachHtml}
-                    </div>`;
+                container.innerHTML += `<div class="list-item" style="padding:14px;"><button class="delete-btn" onclick="window.removeCondition(${cond.id})">×</button><div style="font-weight:bold; font-size:1.1rem; color:var(--primary); padding-right: 20px;">${cond.name}</div>${attachHtml}</div>`;
             });
         }
 
         // --- MEDICATIONS ---
         const isPrnCheckbox = document.getElementById('medIsPRN');
-        isPrnCheckbox.addEventListener('change', e => {
-            document.getElementById('scheduled-inputs').classList.toggle('hidden', e.target.checked);
-            document.getElementById('prn-inputs').classList.toggle('hidden', !e.target.checked);
-        });
-
+        isPrnCheckbox.addEventListener('change', e => { document.getElementById('scheduled-inputs').classList.toggle('hidden', e.target.checked); document.getElementById('prn-inputs').classList.toggle('hidden', !e.target.checked); });
         document.getElementById('medForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             document.getElementById('cloud-status').textContent = "Saving medication... Please wait.";
-            const isPRN = isPrnCheckbox.checked;
-            const file = document.getElementById('medFile').files[0];
-            let fileUrl = null;
-            if(file) fileUrl = await uploadFile(file, 'medications');
-
-            medications.push({
-                id: Date.now(), name: document.getElementById('medName').value, reason: document.getElementById('medReason').value,
-                dose: document.getElementById('medDose').value, total: document.getElementById('medTotal').value || 'N/A',
-                isPRN: isPRN, fileUrl: fileUrl,
-                morn: isPRN ? 0 : parseFloat(document.getElementById('medMorn').value), aft: isPRN ? 0 : parseFloat(document.getElementById('medAft').value),
-                eve: isPRN ? 0 : parseFloat(document.getElementById('medEve').value), night: isPRN ? 0 : parseFloat(document.getElementById('medNight').value),
-                prnInstructions: isPRN ? document.getElementById('medPrnInstructions').value : ''
-            });
-            renderMedications();
-            saveToCloud('medications', medications);
-            this.reset();
-            isPrnCheckbox.checked = false;
-            document.getElementById('scheduled-inputs').classList.remove('hidden');
-            document.getElementById('prn-inputs').classList.add('hidden');
-            document.getElementById('medFileName').textContent = '';
+            const isPRN = isPrnCheckbox.checked; const file = document.getElementById('medFile').files[0];
+            let fileUrl = null; if(file) fileUrl = await uploadFile(file, 'medications');
+            medications.push({ id: Date.now(), name: document.getElementById('medName').value, reason: document.getElementById('medReason').value, dose: document.getElementById('medDose').value, total: document.getElementById('medTotal').value || 'N/A', isPRN: isPRN, fileUrl: fileUrl, morn: isPRN ? 0 : parseFloat(document.getElementById('medMorn').value), aft: isPRN ? 0 : parseFloat(document.getElementById('medAft').value), eve: isPRN ? 0 : parseFloat(document.getElementById('medEve').value), night: isPRN ? 0 : parseFloat(document.getElementById('medNight').value), prnInstructions: isPRN ? document.getElementById('medPrnInstructions').value : '' });
+            renderMedications(); saveToCloud('medications', medications); this.reset();
+            isPrnCheckbox.checked = false; document.getElementById('scheduled-inputs').classList.remove('hidden'); document.getElementById('prn-inputs').classList.add('hidden'); document.getElementById('medFileName').textContent = '';
         });
-
         window.deleteMedication = function(id) { medications = medications.filter(m => m.id !== id); renderMedications(); saveToCloud('medications', medications); }
-
         function renderMedications() {
             const list = document.getElementById('med-list');
             list.innerHTML = medications.length === 0 ? '<div class="empty-state">No meds added.</div>' : '';
             medications.forEach(med => {
                 const layout = med.isPRN ? `<div class="prn-display-box">Inst: ${med.prnInstructions || 'As Needed'}</div>` : `<div class="kardex-grid"><div class="kardex-box"><span class="time">Morn</span><strong>${med.morn}</strong><span class="unit-dose">${med.morn>0?med.dose:''}</span></div><div class="kardex-box"><span class="time">Aft</span><strong>${med.aft}</strong><span class="unit-dose">${med.aft>0?med.dose:''}</span></div><div class="kardex-box"><span class="time">Eve</span><strong>${med.eve}</strong><span class="unit-dose">${med.eve>0?med.dose:''}</span></div><div class="kardex-box"><span class="time">Night</span><strong>${med.night}</strong><span class="unit-dose">${med.night>0?med.dose:''}</span></div></div>`;
                 const attachHtml = med.fileUrl ? `<a href="${med.fileUrl}" class="attachment-btn" target="_blank" style="margin-bottom: 12px;">📷 View Medication Photo</a>` : '';
-                list.innerHTML += `
-                    <div class="list-item">
-                        <button class="delete-btn" onclick="window.deleteMedication(${med.id})">×</button>
-                        <div class="item-title">${med.name} ${med.isPRN ? '<span class="prn-badge">PRN</span>':''}</div>
-                        <div class="med-reason-badge">${med.reason}</div>
-                        ${layout}
-                        ${attachHtml}
-                        <div style="font-size:0.9rem; display:flex; justify-content:space-between; color:var(--text-light);">
-                            <span>Unit: ${med.dose}</span><span>Max: ${med.total}</span>
-                        </div>
-                    </div>`;
+                list.innerHTML += `<div class="list-item"><button class="delete-btn" onclick="window.deleteMedication(${med.id})">×</button><div class="item-title">${med.name} ${med.isPRN ? '<span class="prn-badge">PRN</span>':''}</div><div class="med-reason-badge">${med.reason}</div>${layout}${attachHtml}<div style="font-size:0.9rem; display:flex; justify-content:space-between; color:var(--text-light);"><span>Unit: ${med.dose}</span><span>Max: ${med.total}</span></div></div>`;
             });
         }
 
@@ -538,82 +486,39 @@
             e.preventDefault();
             document.getElementById('cloud-status').textContent = "Saving blood test... Please wait.";
             const file = document.getElementById('bloodFile').files[0];
-            let fileUrl = null;
-            if(file) fileUrl = await uploadFile(file, 'bloods');
-
-            bloods.push({
-                id: Date.now(), date: document.getElementById('bloodDate').value,
-                type: document.getElementById('bloodType').value, notes: document.getElementById('bloodNotes').value,
-                fileUrl: fileUrl
-            });
+            let fileUrl = null; if(file) fileUrl = await uploadFile(file, 'bloods');
+            bloods.push({ id: Date.now(), date: document.getElementById('bloodDate').value, type: document.getElementById('bloodType').value, notes: document.getElementById('bloodNotes').value, fileUrl: fileUrl });
             bloods.sort((a,b) => new Date(b.date) - new Date(a.date));
-            renderBloods();
-            saveToCloud('bloods', bloods);
-            this.reset();
-            document.getElementById('bloodFileName').textContent = '';
+            renderBloods(); saveToCloud('bloods', bloods); this.reset(); document.getElementById('bloodFileName').textContent = '';
         });
-
         window.deleteBlood = function(id) { bloods = bloods.filter(b => b.id !== id); renderBloods(); saveToCloud('bloods', bloods); }
-
         function renderBloods() {
             const list = document.getElementById('blood-list');
             list.innerHTML = bloods.length === 0 ? '<div class="empty-state">No blood tests logged.</div>' : '';
             bloods.forEach(b => {
-                const parts = b.date.split('-');
-                const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : b.date;
+                const parts = b.date.split('-'); const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : b.date;
                 const attachHtml = b.fileUrl ? `<br><a href="${b.fileUrl}" class="attachment-btn" target="_blank">📎 View Attached Result</a>` : '';
-                list.innerHTML += `
-                    <div class="list-item" style="border-left-color: #8E44AD;">
-                        <button class="delete-btn" onclick="window.deleteBlood(${b.id})">×</button>
-                        <div class="item-title" style="color: #8E44AD;">${b.type}</div>
-                        <div class="item-meta">📅 ${fmtDate}</div>
-                        ${b.notes ? `<div class="item-notes">${b.notes}</div>` : ''}
-                        ${attachHtml}
-                    </div>`;
+                list.innerHTML += `<div class="list-item" style="border-left-color: #8E44AD;"><button class="delete-btn" onclick="window.deleteBlood(${b.id})">×</button><div class="item-title" style="color: #8E44AD;">${b.type}</div><div class="item-meta">📅 ${fmtDate}</div>${b.notes ? `<div class="item-notes">${b.notes}</div>` : ''}${attachHtml}</div>`;
             });
         }
 
         // --- APPOINTMENTS ---
         document.getElementById('apptForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            appts.push({
-                id: Date.now(), date: document.getElementById('apptDate').value, time: document.getElementById('apptTime').value,
-                location: document.getElementById('apptLocation').value, dept: document.getElementById('apptDept').value, notes: document.getElementById('apptNotes').value
-            });
-            appts.sort((a,b) => new Date(a.date) - new Date(b.date));
-            renderAppts();
-            saveToCloud('appts', appts);
-            this.reset();
+            appts.push({ id: Date.now(), date: document.getElementById('apptDate').value, time: document.getElementById('apptTime').value, location: document.getElementById('apptLocation').value, dept: document.getElementById('apptDept').value, notes: document.getElementById('apptNotes').value });
+            appts.sort((a,b) => new Date(a.date) - new Date(b.date)); renderAppts(); saveToCloud('appts', appts); this.reset();
         });
-
         window.deleteAppt = function(id) { appts = appts.filter(a => a.id !== id); renderAppts(); saveToCloud('appts', appts); }
-
         function renderAppts() {
             const list = document.getElementById('appt-list');
             list.innerHTML = appts.length === 0 ? '<div class="empty-state">No appointments logged.</div>' : '';
             appts.forEach(a => {
-                const parts = a.date.split('-');
-                const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : a.date;
-                list.innerHTML += `
-                    <div class="list-item" style="border-left-color: #27AE60;">
-                        <button class="delete-btn" onclick="window.deleteAppt(${a.id})">×</button>
-                        <div class="item-title" style="color: #27AE60;">${a.location}</div>
-                        <div class="item-meta">📅 ${fmtDate} ${a.time ? `| ⏰ ${a.time}` : ''}<br>👨‍⚕️ ${a.dept || 'Not specified'}</div>
-                        ${a.notes ? `<div class="item-notes">${a.notes}</div>` : ''}
-                    </div>`;
+                const parts = a.date.split('-'); const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : a.date;
+                list.innerHTML += `<div class="list-item" style="border-left-color: #27AE60;"><button class="delete-btn" onclick="window.deleteAppt(${a.id})">×</button><div class="item-title" style="color: #27AE60;">${a.location}</div><div class="item-meta">📅 ${fmtDate} ${a.time ? `| ⏰ ${a.time}` : ''}<br>👨‍⚕️ ${a.dept || 'Not specified'}</div>${a.notes ? `<div class="item-notes">${a.notes}</div>` : ''}</div>`;
             });
         }
 
-        // --- PWA Service Worker Registration ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => console.log('ServiceWorker registered'))
-                    .catch(err => console.log('ServiceWorker registration failed: ', err));
-            });
-        }
-
-        loadProfileDataFromCloud();
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').then(registration => console.log('SW registered')).catch(err => console.log('SW failed: ', err)); }); }
     </script>
 </body>
 </html>
