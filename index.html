@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedRx - Family Profile</title>
     
-    <!-- PWA Links -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#005A9C">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -32,21 +31,19 @@
         h2 { font-size: 1.25rem; margin-bottom: 16px; color: var(--text-dark); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
         .theme-toggle { background: none; border: 1px solid var(--border-color); color: var(--text-dark); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; width: auto; }
 
-        /* Tabs & Cards */
         .family-tabs { display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; }
         .family-tab { flex: 1; padding: 10px; text-align: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-weight: bold; color: var(--text-light); transition: 0.2s; min-width: 70px; }
         .family-tab.active { background: var(--primary); color: #FFF; border-color: var(--primary); box-shadow: 0 4px 6px rgba(0,90,156,0.2); }
         .card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 24px; }
 
-        /* Forms */
         .form-group { margin-bottom: 16px; }
         label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500; color: var(--text-dark); }
         input, textarea { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1rem; background-color: var(--card-bg); color: var(--text-dark); }
+        input[type="file"] { padding: 6px; background-color: var(--kardex-bg); font-size: 0.85rem; }
         button { width: 100%; padding: 14px; background-color: var(--primary); color: #FFF; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         button:hover { background-color: var(--primary-hover); }
         .btn-secondary { background-color: transparent; color: var(--text-light); border: 1px solid var(--input-border); padding: 8px; font-size: 0.85rem; margin-top: 12px; }
 
-        /* Nav & Displays */
         .nav-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
         .nav-card { background-color: var(--primary); color: #FFF; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .back-btn { display: inline-block; background: none; border: none; color: var(--primary); font-weight: bold; font-size: 1rem; cursor: pointer; margin-bottom: 16px; width: auto; padding: 0; text-align: left; }
@@ -57,17 +54,12 @@
         .allergy-alert { color: var(--danger); background-color: var(--danger-bg); }
         .allergy-clear { color: var(--success); background-color: var(--success-bg); }
 
-        /* Conditions & Lists */
-        .conditions-display-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-        .condition-box { background-color: var(--warning); color: #000; padding: 6px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; }
-        .condition-tag { background-color: var(--primary); color: white; padding: 6px 12px; border-radius: 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; margin: 4px; }
         .item-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
         .list-item { background-color: var(--card-bg); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); position: relative; }
         .item-title { font-weight: bold; font-size: 1.2rem; color: var(--primary); padding-right: 30px; margin-bottom: 4px; }
         .item-meta { font-size: 0.9rem; color: var(--text-light); margin-bottom: 8px; }
         .item-notes { background-color: var(--kardex-bg); padding: 10px; border-radius: 6px; font-size: 0.95rem; margin-top: 8px; border-left: 2px solid var(--text-light); white-space: pre-wrap; }
 
-        /* Kardex Grid */
         .med-reason-badge { display: inline-block; background-color: var(--border-color); color: var(--text-dark); font-size: 0.85rem; font-weight: bold; padding: 2px 10px; border-radius: 12px; margin-bottom: 12px; }
         .kardex-grid { display: flex; gap: 8px; margin-bottom: 12px; }
         .kardex-box { flex: 1; background-color: var(--kardex-bg); border: 1px solid var(--border-color); border-radius: 6px; text-align: center; padding: 8px 4px; }
@@ -84,6 +76,9 @@
         .empty-state { text-align: center; color: var(--text-light); font-style: italic; padding: 20px; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; font-weight: bold; cursor: pointer; background: var(--nav-bg); padding: 12px; border-radius: 6px; color: var(--primary); border: 1px solid var(--border-color); margin-bottom: 16px; }
         .checkbox-label input { width: auto; margin: 0; transform: scale(1.2); }
+        
+        .attachment-btn { display:inline-block; background:var(--nav-bg); padding:8px 12px; border-radius:6px; color:var(--primary); text-decoration:none; font-size:0.85rem; font-weight:bold; border: 1px solid var(--border-color); margin-top: 10px;}
+        .attachment-btn:hover { background: var(--border-color); }
     </style>
 </head>
 <body>
@@ -101,7 +96,7 @@
     </div>
 
     <!-- Status Indicator -->
-    <div id="cloud-status" style="text-align: center; font-size: 0.8rem; color: var(--text-light); margin-bottom: 16px;">
+    <div id="cloud-status" style="text-align: center; font-size: 0.8rem; font-weight: bold; color: var(--primary); margin-bottom: 16px;">
         Connecting to cloud...
     </div>
 
@@ -153,15 +148,18 @@
         <!-- ================= TAB: MEDS & HISTORY ================= -->
         <section id="view-meds" class="hidden">
             <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
+            
             <div class="card">
-                <h2>Past Medical History</h2>
+                <h2>Medical Conditions Gallery</h2>
                 <div class="form-group">
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="conditionInput" placeholder="Add condition (e.g. Asthma)">
-                        <button type="button" onclick="window.addCondition()" style="width: auto; padding: 10px 20px;">Add</button>
+                    <label>Add Condition & Optional Photo</label>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <input type="text" id="conditionInput" placeholder="e.g. Eczema, Asthma">
+                        <input type="file" id="conditionFile" accept="image/*">
+                        <button type="button" onclick="window.addCondition()">Add to History</button>
                     </div>
-                    <div id="conditionsListForm" style="margin-top: 12px;"></div>
                 </div>
+                <div id="conditionsListForm" class="item-list" style="margin-top: 16px;"></div>
             </div>
 
             <h2>Current Medications</h2>
@@ -172,6 +170,12 @@
                 <form id="medForm">
                     <div class="form-group"><label>Medication Name</label><input type="text" id="medName" required></div>
                     <div class="form-group"><label>Used for</label><input type="text" id="medReason" required></div>
+                    
+                    <div class="form-group">
+                        <label>Photo of Medication / Box (Optional)</label>
+                        <input type="file" id="medFile" accept="image/*">
+                    </div>
+
                     <div style="display: flex; gap: 12px; margin-bottom: 16px;">
                         <div class="form-group" style="flex: 1;"><label>Dose/Tab</label><input type="text" id="medDose" required></div>
                         <div class="form-group" style="flex: 1;"><label>Total Daily</label><input type="text" id="medTotal"></div>
@@ -204,7 +208,13 @@
                 <form id="bloodForm">
                     <div class="form-group"><label>Date of Test</label><input type="date" id="bloodDate" required></div>
                     <div class="form-group"><label>Test Type / Panel</label><input type="text" id="bloodType" placeholder="e.g., Full Blood Count" required></div>
-                    <div class="form-group"><label>Results & Notes</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Paste formatted AI tables here."></textarea></div>
+                    
+                    <div class="form-group">
+                        <label>Attach PDF or Photo of Results (Optional)</label>
+                        <input type="file" id="bloodFile" accept="image/*,application/pdf">
+                    </div>
+
+                    <div class="form-group"><label>Notes (or Paste AI Table)</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Doctor said Iron is improving."></textarea></div>
                     <button type="submit">+ Add Record</button>
                 </form>
             </div>
@@ -231,10 +241,11 @@
         </section>
     </main>
 
-    <!-- FIREBASE AND APP LOGIC (MODULE SCRIPT) -->
+    <!-- FIREBASE AND APP LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDdfcHazK_TTmNoLByjab9Aegxkd_ve2vo",
@@ -247,8 +258,8 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        // State variables
         let currentProfile = 'Aaron';
         let patientData = null;
         let medications = [];
@@ -257,7 +268,6 @@
         let patientConditions = [];
         const views = ['view-setup', 'view-splash', 'view-meds', 'view-bloods', 'view-appts'];
 
-        // --- Theme Logic ---
         let isDark = localStorage.getItem('MedRx_theme') === 'dark';
         if(isDark) document.documentElement.setAttribute('data-theme', 'dark');
 
@@ -272,7 +282,6 @@
             }
         };
 
-        // --- Navigation ---
         window.navigate = function(targetView) {
             views.forEach(v => document.getElementById(v).classList.add('hidden'));
             document.getElementById(targetView).classList.remove('hidden');
@@ -288,18 +297,24 @@
             loadProfileDataFromCloud();
         };
 
-        // --- FIREBASE SYNC FUNCTIONS ---
+        // --- CLOUD SYNC & FILE UPLOAD ---
         async function saveToCloud(key, data) {
-            document.getElementById('cloud-status').textContent = "Saving...";
             try {
-                await setDoc(doc(db, "familyProfiles", currentProfile), {
-                    [key]: data
-                }, { merge: true });
-                document.getElementById('cloud-status').textContent = "Saved to cloud ☁️";
+                await setDoc(doc(db, "familyProfiles", currentProfile), { [key]: data }, { merge: true });
+                document.getElementById('cloud-status').textContent = "Synced ☁️";
             } catch(e) {
                 console.error(e);
-                document.getElementById('cloud-status').textContent = "⚠️ Save failed. Check connection.";
+                document.getElementById('cloud-status').textContent = "⚠️ Save failed.";
             }
+        }
+
+        async function uploadFile(file, folder) {
+            if(!file) return null;
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+            const storageRef = ref(storage, `${currentProfile}/${folder}/${fileName}`);
+            await uploadBytes(storageRef, file);
+            return await getDownloadURL(storageRef);
         }
 
         async function loadProfileDataFromCloud() {
@@ -314,15 +329,17 @@
                     medications = data.medications || [];
                     bloods = data.bloods || [];
                     appts = data.appts || [];
-                    patientConditions = data.conditions || [];
+                    
+                    // Migration: convert old string conditions to new object format
+                    let rawConditions = data.conditions || [];
+                    patientConditions = rawConditions.map(c => typeof c === 'string' ? { id: Date.now()+Math.random(), name: c, fileUrl: null } : c);
                 } else {
-                    // No data in cloud yet
                     patientData = null; medications = []; bloods = []; appts = []; patientConditions = [];
                 }
                 document.getElementById('cloud-status').textContent = "Synced ☁️";
             } catch(e) {
                 console.error(e);
-                document.getElementById('cloud-status').textContent = "⚠️ Offline mode (Cloud unreachable)";
+                document.getElementById('cloud-status').textContent = "⚠️ Offline mode";
             }
 
             if (patientData) {
@@ -348,21 +365,15 @@
             renderAppts();
         }
 
-        // --- Render Functions ---
         function populateSplash() {
             document.getElementById('display-name').textContent = patientData.name;
             document.getElementById('display-dob').textContent = `DOB: ${patientData.dobFormatted}`;
             document.getElementById('display-gp').textContent = patientData.gp;
             document.getElementById('display-contact-name').textContent = patientData.contactName;
-            
             const phoneEl = document.getElementById('display-contact-phone');
-            if(patientData.contactPhone) { phoneEl.textContent = patientData.contactPhone; phoneEl.href = `tel:${patientData.contactPhone}`; } 
-            else { phoneEl.textContent = ''; }
-            
+            if(patientData.contactPhone) { phoneEl.textContent = patientData.contactPhone; phoneEl.href = `tel:${patientData.contactPhone}`; } else { phoneEl.textContent = ''; }
             const eircodeBox = document.getElementById('display-eircode');
-            if (patientData.eircode && patientData.eircode.trim()) { eircodeBox.textContent = `📍 Eircode: ${patientData.eircode}`; eircodeBox.classList.remove('hidden'); } 
-            else { eircodeBox.classList.add('hidden'); }
-
+            if (patientData.eircode && patientData.eircode.trim()) { eircodeBox.textContent = `📍 Eircode: ${patientData.eircode}`; eircodeBox.classList.remove('hidden'); } else { eircodeBox.classList.add('hidden'); }
             const allergyBox = document.getElementById('display-allergies');
             if (patientData.allergies && patientData.allergies.trim()) {
                 allergyBox.innerHTML = `⚠️ Allergies: ${patientData.allergies}`;
@@ -388,57 +399,71 @@
                 contactPhone: document.getElementById('patContactPhone').value || '',
                 allergies: document.getElementById('patAllergies').value
             };
-
             saveToCloud('patientData', patientData);
             populateSplash();
             window.navigate('view-splash');
         });
 
-        // --- Conditions ---
-        window.addCondition = function() {
-            const val = document.getElementById('conditionInput').value.trim();
-            if (val) {
-                patientConditions.push(val);
+        // --- CONDITIONS (GALLERY) ---
+        window.addCondition = async function() {
+            const input = document.getElementById('conditionInput');
+            const fileInput = document.getElementById('conditionFile');
+            const val = input.value.trim();
+            const file = fileInput.files[0];
+            
+            if (val || file) {
+                document.getElementById('cloud-status').textContent = "Uploading file... Please wait.";
+                let fileUrl = null;
+                if(file) fileUrl = await uploadFile(file, 'conditions');
+                
+                patientConditions.push({ id: Date.now(), name: val || 'Condition / Note', fileUrl: fileUrl });
                 renderConditions();
                 saveToCloud('conditions', patientConditions);
-                document.getElementById('conditionInput').value = '';
+                input.value = ''; fileInput.value = '';
             }
         }
-        window.removeCondition = function(i) {
-            patientConditions.splice(i, 1);
+
+        window.removeCondition = function(id) {
+            patientConditions = patientConditions.filter(c => c.id !== id);
             renderConditions();
             saveToCloud('conditions', patientConditions);
         }
+
         function renderConditions() {
             const container = document.getElementById('conditionsListForm');
-            container.innerHTML = '';
-            if(patientConditions.length === 0) container.innerHTML = '<span style="color:var(--text-light);font-size:0.9rem;">No conditions added.</span>';
-            patientConditions.forEach((cond, i) => {
-                container.innerHTML += `<div class="condition-tag">${cond} <span style="cursor:pointer;" onclick="window.removeCondition(${i})">×</span></div>`;
+            container.innerHTML = patientConditions.length === 0 ? '<span style="color:var(--text-light);font-size:0.9rem;">No conditions logged.</span>' : '';
+            patientConditions.forEach((cond) => {
+                let attachHtml = cond.fileUrl ? `<br><a href="${cond.fileUrl}" class="attachment-btn" target="_blank">📷 View Photo</a>` : '';
+                container.innerHTML += `
+                    <div class="list-item" style="padding:14px;">
+                        <button class="delete-btn" onclick="window.removeCondition(${cond.id})">×</button>
+                        <div style="font-weight:bold; font-size:1.1rem; color:var(--primary); padding-right: 20px;">${cond.name}</div>
+                        ${attachHtml}
+                    </div>`;
             });
         }
 
-        // --- Medications ---
+        // --- MEDICATIONS ---
         const isPrnCheckbox = document.getElementById('medIsPRN');
         isPrnCheckbox.addEventListener('change', e => {
             document.getElementById('scheduled-inputs').classList.toggle('hidden', e.target.checked);
             document.getElementById('prn-inputs').classList.toggle('hidden', !e.target.checked);
         });
 
-        document.getElementById('medForm').addEventListener('submit', function(e) {
+        document.getElementById('medForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            document.getElementById('cloud-status').textContent = "Saving medication... Please wait.";
             const isPRN = isPrnCheckbox.checked;
+            const file = document.getElementById('medFile').files[0];
+            let fileUrl = null;
+            if(file) fileUrl = await uploadFile(file, 'medications');
+
             medications.push({
-                id: Date.now(),
-                name: document.getElementById('medName').value,
-                reason: document.getElementById('medReason').value,
-                dose: document.getElementById('medDose').value,
-                total: document.getElementById('medTotal').value || 'N/A',
-                isPRN: isPRN,
-                morn: isPRN ? 0 : parseFloat(document.getElementById('medMorn').value),
-                aft: isPRN ? 0 : parseFloat(document.getElementById('medAft').value),
-                eve: isPRN ? 0 : parseFloat(document.getElementById('medEve').value),
-                night: isPRN ? 0 : parseFloat(document.getElementById('medNight').value),
+                id: Date.now(), name: document.getElementById('medName').value, reason: document.getElementById('medReason').value,
+                dose: document.getElementById('medDose').value, total: document.getElementById('medTotal').value || 'N/A',
+                isPRN: isPRN, fileUrl: fileUrl,
+                morn: isPRN ? 0 : parseFloat(document.getElementById('medMorn').value), aft: isPRN ? 0 : parseFloat(document.getElementById('medAft').value),
+                eve: isPRN ? 0 : parseFloat(document.getElementById('medEve').value), night: isPRN ? 0 : parseFloat(document.getElementById('medNight').value),
                 prnInstructions: isPRN ? document.getElementById('medPrnInstructions').value : ''
             });
             renderMedications();
@@ -449,30 +474,21 @@
             document.getElementById('prn-inputs').classList.add('hidden');
         });
 
-        window.deleteMedication = function(id) { 
-            medications = medications.filter(m => m.id !== id); 
-            renderMedications();
-            saveToCloud('medications', medications); 
-        }
+        window.deleteMedication = function(id) { medications = medications.filter(m => m.id !== id); renderMedications(); saveToCloud('medications', medications); }
 
         function renderMedications() {
             const list = document.getElementById('med-list');
             list.innerHTML = medications.length === 0 ? '<div class="empty-state">No meds added.</div>' : '';
             medications.forEach(med => {
-                const layout = med.isPRN 
-                    ? `<div class="prn-display-box">Inst: ${med.prnInstructions || 'As Needed'}</div>` 
-                    : `<div class="kardex-grid">
-                        <div class="kardex-box"><span class="time">Morn</span><strong>${med.morn}</strong><span class="unit-dose">${med.morn>0?med.dose:''}</span></div>
-                        <div class="kardex-box"><span class="time">Aft</span><strong>${med.aft}</strong><span class="unit-dose">${med.aft>0?med.dose:''}</span></div>
-                        <div class="kardex-box"><span class="time">Eve</span><strong>${med.eve}</strong><span class="unit-dose">${med.eve>0?med.dose:''}</span></div>
-                        <div class="kardex-box"><span class="time">Night</span><strong>${med.night}</strong><span class="unit-dose">${med.night>0?med.dose:''}</span></div>
-                       </div>`;
+                const layout = med.isPRN ? `<div class="prn-display-box">Inst: ${med.prnInstructions || 'As Needed'}</div>` : `<div class="kardex-grid"><div class="kardex-box"><span class="time">Morn</span><strong>${med.morn}</strong><span class="unit-dose">${med.morn>0?med.dose:''}</span></div><div class="kardex-box"><span class="time">Aft</span><strong>${med.aft}</strong><span class="unit-dose">${med.aft>0?med.dose:''}</span></div><div class="kardex-box"><span class="time">Eve</span><strong>${med.eve}</strong><span class="unit-dose">${med.eve>0?med.dose:''}</span></div><div class="kardex-box"><span class="time">Night</span><strong>${med.night}</strong><span class="unit-dose">${med.night>0?med.dose:''}</span></div></div>`;
+                const attachHtml = med.fileUrl ? `<a href="${med.fileUrl}" class="attachment-btn" target="_blank" style="margin-bottom: 12px;">📷 View Medication Photo</a>` : '';
                 list.innerHTML += `
                     <div class="list-item">
                         <button class="delete-btn" onclick="window.deleteMedication(${med.id})">×</button>
                         <div class="item-title">${med.name} ${med.isPRN ? '<span class="prn-badge">PRN</span>':''}</div>
                         <div class="med-reason-badge">${med.reason}</div>
                         ${layout}
+                        ${attachHtml}
                         <div style="font-size:0.9rem; display:flex; justify-content:space-between; color:var(--text-light);">
                             <span>Unit: ${med.dose}</span><span>Max: ${med.total}</span>
                         </div>
@@ -480,14 +496,18 @@
             });
         }
 
-        // --- Bloods ---
-        document.getElementById('bloodForm').addEventListener('submit', function(e) {
+        // --- BLOODS ---
+        document.getElementById('bloodForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            document.getElementById('cloud-status').textContent = "Saving blood test... Please wait.";
+            const file = document.getElementById('bloodFile').files[0];
+            let fileUrl = null;
+            if(file) fileUrl = await uploadFile(file, 'bloods');
+
             bloods.push({
-                id: Date.now(),
-                date: document.getElementById('bloodDate').value,
-                type: document.getElementById('bloodType').value,
-                notes: document.getElementById('bloodNotes').value
+                id: Date.now(), date: document.getElementById('bloodDate').value,
+                type: document.getElementById('bloodType').value, notes: document.getElementById('bloodNotes').value,
+                fileUrl: fileUrl
             });
             bloods.sort((a,b) => new Date(b.date) - new Date(a.date));
             renderBloods();
@@ -495,11 +515,7 @@
             this.reset();
         });
 
-        window.deleteBlood = function(id) { 
-            bloods = bloods.filter(b => b.id !== id); 
-            renderBloods(); 
-            saveToCloud('bloods', bloods);
-        }
+        window.deleteBlood = function(id) { bloods = bloods.filter(b => b.id !== id); renderBloods(); saveToCloud('bloods', bloods); }
 
         function renderBloods() {
             const list = document.getElementById('blood-list');
@@ -507,26 +523,24 @@
             bloods.forEach(b => {
                 const parts = b.date.split('-');
                 const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : b.date;
+                const attachHtml = b.fileUrl ? `<br><a href="${b.fileUrl}" class="attachment-btn" target="_blank">📎 View Attached Result</a>` : '';
                 list.innerHTML += `
                     <div class="list-item" style="border-left-color: #8E44AD;">
                         <button class="delete-btn" onclick="window.deleteBlood(${b.id})">×</button>
                         <div class="item-title" style="color: #8E44AD;">${b.type}</div>
                         <div class="item-meta">📅 ${fmtDate}</div>
                         ${b.notes ? `<div class="item-notes">${b.notes}</div>` : ''}
+                        ${attachHtml}
                     </div>`;
             });
         }
 
-        // --- Appointments ---
+        // --- APPOINTMENTS ---
         document.getElementById('apptForm').addEventListener('submit', function(e) {
             e.preventDefault();
             appts.push({
-                id: Date.now(),
-                date: document.getElementById('apptDate').value,
-                time: document.getElementById('apptTime').value,
-                location: document.getElementById('apptLocation').value,
-                dept: document.getElementById('apptDept').value,
-                notes: document.getElementById('apptNotes').value
+                id: Date.now(), date: document.getElementById('apptDate').value, time: document.getElementById('apptTime').value,
+                location: document.getElementById('apptLocation').value, dept: document.getElementById('apptDept').value, notes: document.getElementById('apptNotes').value
             });
             appts.sort((a,b) => new Date(a.date) - new Date(b.date));
             renderAppts();
@@ -534,11 +548,7 @@
             this.reset();
         });
 
-        window.deleteAppt = function(id) { 
-            appts = appts.filter(a => a.id !== id); 
-            renderAppts();
-            saveToCloud('appts', appts);
-        }
+        window.deleteAppt = function(id) { appts = appts.filter(a => a.id !== id); renderAppts(); saveToCloud('appts', appts); }
 
         function renderAppts() {
             const list = document.getElementById('appt-list');
@@ -565,7 +575,6 @@
             });
         }
 
-        // Start App by loading cloud data
         loadProfileDataFromCloud();
     </script>
 </body>
