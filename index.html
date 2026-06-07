@@ -12,75 +12,44 @@
 
     <style>
         :root {
-            /* Light Theme */
-            --primary: #005A9C;
-            --primary-hover: #00457A;
-            --bg-color: #F4F7F6;
-            --card-bg: #FFFFFF;
-            --text-dark: #2C3E50;
-            --text-light: #7F8C8D;
-            --danger: #E74C3C;
-            --danger-bg: #FDEDEC;
-            --success: #27AE60;
-            --success-bg: #EAFAF1;
-            --warning: #F39C12;
-            --border-color: #EEE;
-            --input-border: #CCC;
-            --nav-bg: #E8F6F3;
-            --kardex-bg: #F4F7F6;
+            --primary: #005A9C; --primary-hover: #00457A; --bg-color: #F4F7F6; --card-bg: #FFFFFF;
+            --text-dark: #2C3E50; --text-light: #7F8C8D; --danger: #E74C3C; --danger-bg: #FDEDEC;
+            --success: #27AE60; --success-bg: #EAFAF1; --warning: #F39C12; --border-color: #EEE;
+            --input-border: #CCC; --nav-bg: #E8F6F3; --kardex-bg: #F4F7F6;
         }
 
         [data-theme="dark"] {
-            /* Dark Theme */
-            --primary: #4DA8DA;
-            --primary-hover: #7CB9E8;
-            --bg-color: #121212;
-            --card-bg: #1E1E1E;
-            --text-dark: #E0E0E0;
-            --text-light: #A0A0A0;
-            --danger: #FF6B6B;
-            --danger-bg: #3E1E1E;
-            --success: #45B7D1;
-            --success-bg: #1E3E3E;
-            --warning: #F4D03F;
-            --border-color: #333;
-            --input-border: #444;
-            --nav-bg: #2C3E50;
-            --kardex-bg: #2A2A2A;
+            --primary: #4DA8DA; --primary-hover: #7CB9E8; --bg-color: #121212; --card-bg: #1E1E1E;
+            --text-dark: #E0E0E0; --text-light: #A0A0A0; --danger: #FF6B6B; --danger-bg: #3E1E1E;
+            --success: #45B7D1; --success-bg: #1E3E3E; --warning: #F4D03F; --border-color: #333;
+            --input-border: #444; --nav-bg: #2C3E50; --kardex-bg: #2A2A2A;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
         body { background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; padding: 20px; max-width: 600px; margin: 0 auto; transition: background-color 0.3s, color 0.3s; }
-
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         h1 { color: var(--primary); font-size: 1.8rem; margin: 0; letter-spacing: -0.5px; }
         h2 { font-size: 1.25rem; margin-bottom: 16px; color: var(--text-dark); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
-        
         .theme-toggle { background: none; border: 1px solid var(--border-color); color: var(--text-dark); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; width: auto; }
 
-        /* Family Tabs */
+        /* Tabs & Cards */
         .family-tabs { display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; }
         .family-tab { flex: 1; padding: 10px; text-align: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-weight: bold; color: var(--text-light); transition: 0.2s; min-width: 70px; }
         .family-tab.active { background: var(--primary); color: #FFF; border-color: var(--primary); box-shadow: 0 4px 6px rgba(0,90,156,0.2); }
-
-        .card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 24px; transition: background-color 0.3s; }
+        .card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 24px; }
 
         /* Forms */
         .form-group { margin-bottom: 16px; }
         label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500; color: var(--text-dark); }
         input, textarea { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1rem; background-color: var(--card-bg); color: var(--text-dark); }
-        button { width: 100%; padding: 14px; background-color: var(--primary); color: #FFF; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+        button { width: 100%; padding: 14px; background-color: var(--primary); color: #FFF; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         button:hover { background-color: var(--primary-hover); }
         .btn-secondary { background-color: transparent; color: var(--text-light); border: 1px solid var(--input-border); padding: 8px; font-size: 0.85rem; margin-top: 12px; }
 
-        /* Navigation */
+        /* Nav & Displays */
         .nav-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        .nav-card { background-color: var(--primary); color: #FFF; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s; }
-        .nav-card:active { transform: scale(0.98); }
+        .nav-card { background-color: var(--primary); color: #FFF; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .back-btn { display: inline-block; background: none; border: none; color: var(--primary); font-weight: bold; font-size: 1rem; cursor: pointer; margin-bottom: 16px; width: auto; padding: 0; text-align: left; }
-
-        /* Displays */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
         .info-box { background-color: var(--kardex-bg); padding: 10px; border-radius: 8px; font-size: 0.9rem; }
         .eircode-badge { background-color: var(--nav-bg); color: var(--primary); padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; margin-top: 4px; display: inline-block; }
@@ -88,12 +57,10 @@
         .allergy-alert { color: var(--danger); background-color: var(--danger-bg); }
         .allergy-clear { color: var(--success); background-color: var(--success-bg); }
 
-        /* Badges & Tags */
+        /* Conditions & Lists */
         .conditions-display-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
         .condition-box { background-color: var(--warning); color: #000; padding: 6px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; }
         .condition-tag { background-color: var(--primary); color: white; padding: 6px 12px; border-radius: 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; margin: 4px; }
-
-        /* Item Lists */
         .item-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
         .list-item { background-color: var(--card-bg); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); position: relative; }
         .item-title { font-weight: bold; font-size: 1.2rem; color: var(--primary); padding-right: 30px; margin-bottom: 4px; }
@@ -113,7 +80,6 @@
         .delete-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-light); font-size: 1.4rem; cursor: pointer; width: auto; padding: 0; }
         .delete-btn:hover { color: var(--danger); }
         .kardex-inputs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
-        
         .hidden { display: none !important; }
         .empty-state { text-align: center; color: var(--text-light); font-style: italic; padding: 20px; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; font-weight: bold; cursor: pointer; background: var(--nav-bg); padding: 12px; border-radius: 6px; color: var(--primary); border: 1px solid var(--border-color); margin-bottom: 16px; }
@@ -124,15 +90,19 @@
 
     <header>
         <h1>MedRx</h1>
-        <button id="themeToggle" class="theme-toggle">🌙 Dark Mode</button>
+        <button id="themeToggle" class="theme-toggle" onclick="window.toggleTheme()">🌙 Dark Mode</button>
     </header>
 
-    <!-- Family Profile Selector -->
     <div class="family-tabs" id="familyTabs">
-        <div class="family-tab active" onclick="switchProfile('Aaron')">Aaron</div>
-        <div class="family-tab" onclick="switchProfile('Ruth')">Ruth</div>
-        <div class="family-tab" onclick="switchProfile('Mia')">Mia</div>
-        <div class="family-tab" onclick="switchProfile('Jamie')">Jamie</div>
+        <div class="family-tab active" onclick="window.switchProfile('Aaron')">Aaron</div>
+        <div class="family-tab" onclick="window.switchProfile('Ruth')">Ruth</div>
+        <div class="family-tab" onclick="window.switchProfile('Mia')">Mia</div>
+        <div class="family-tab" onclick="window.switchProfile('Jamie')">Jamie</div>
+    </div>
+
+    <!-- Status Indicator -->
+    <div id="cloud-status" style="text-align: center; font-size: 0.8rem; color: var(--text-light); margin-bottom: 16px;">
+        Connecting to cloud...
     </div>
 
     <main>
@@ -146,16 +116,14 @@
                     <div class="form-group" style="flex: 1;"><label>Eircode</label><input type="text" id="patEircode" placeholder="A65 F4E2"></div>
                 </div>
                 <div class="form-group"><label>GP / Clinic</label><input type="text" id="patGP"></div>
-                
                 <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
                 <label style="font-weight: bold; color: var(--primary);">Emergency Contact</label>
                 <div style="display: flex; gap: 12px; margin-bottom: 16px;">
                     <div class="form-group" style="flex: 1; margin-bottom: 0;"><input type="text" id="patContactName" placeholder="Name"></div>
                     <div class="form-group" style="flex: 1; margin-bottom: 0;"><input type="tel" id="patContactPhone" placeholder="Number"></div>
                 </div>
-
                 <div class="form-group"><label>Known Allergies (Leave blank if none)</label><input type="text" id="patAllergies" placeholder="e.g., Penicillin"></div>
-                <button type="submit">Save Profile</button>
+                <button type="submit">Save Profile to Cloud</button>
             </form>
         </section>
 
@@ -163,37 +131,34 @@
         <section id="view-splash" class="hidden">
             <div class="card">
                 <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px;">
-                    <h2 id="display-name" style="margin:0; color: var(--primary); border:none; padding:0;">Name</h2>
+                    <h2 id="display-name" style="margin:0; color: var(--primary); border:none; padding:0;">Loading...</h2>
                     <span id="display-dob" style="color: var(--text-light);">DOB: </span><br>
                     <div id="display-eircode" class="eircode-badge hidden"></div>
                 </div>
-                
                 <div class="info-grid">
                     <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">GP</span><br><strong id="display-gp"></strong></div>
                     <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">Contact</span><br><strong id="display-contact-name"></strong><br><a id="display-contact-phone" style="color: var(--primary); text-decoration: none;"></a></div>
                 </div>
-
                 <div id="display-allergies" class="alert-box hidden"></div>
-                <button id="editBtn" class="btn-secondary">Edit Details</button>
+                <button onclick="window.navigate('view-setup')" class="btn-secondary">Edit Details</button>
             </div>
 
             <div class="nav-grid">
-                <div class="nav-card" onclick="navigate('view-meds')">💊 Meds & Past History</div>
-                <div class="nav-card" onclick="navigate('view-bloods')" style="background-color: #8E44AD;">🩸 Recent Bloods</div>
-                <div class="nav-card" onclick="navigate('view-appts')" style="background-color: #27AE60;">🏥 Hospital Appointments</div>
+                <div class="nav-card" onclick="window.navigate('view-meds')">💊 Meds & Past History</div>
+                <div class="nav-card" onclick="window.navigate('view-bloods')" style="background-color: #8E44AD;">🩸 Recent Bloods</div>
+                <div class="nav-card" onclick="window.navigate('view-appts')" style="background-color: #27AE60;">🏥 Hospital Appointments</div>
             </div>
         </section>
 
         <!-- ================= TAB: MEDS & HISTORY ================= -->
         <section id="view-meds" class="hidden">
-            <button class="back-btn" onclick="navigate('view-splash')">← Back to Profile</button>
-            
+            <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
             <div class="card">
                 <h2>Past Medical History</h2>
                 <div class="form-group">
                     <div style="display: flex; gap: 8px;">
                         <input type="text" id="conditionInput" placeholder="Add condition (e.g. Asthma)">
-                        <button type="button" onclick="addCondition()" style="width: auto; padding: 10px 20px;">Add</button>
+                        <button type="button" onclick="window.addCondition()" style="width: auto; padding: 10px 20px;">Add</button>
                     </div>
                     <div id="conditionsListForm" style="margin-top: 12px;"></div>
                 </div>
@@ -211,9 +176,7 @@
                         <div class="form-group" style="flex: 1;"><label>Dose/Tab</label><input type="text" id="medDose" required></div>
                         <div class="form-group" style="flex: 1;"><label>Total Daily</label><input type="text" id="medTotal"></div>
                     </div>
-
                     <label class="checkbox-label"><input type="checkbox" id="medIsPRN"> This is a PRN (As Needed) medication</label>
-
                     <div id="scheduled-inputs">
                         <label style="font-weight: bold; margin-bottom: 10px;">Tabs taken at:</label>
                         <div class="kardex-inputs">
@@ -223,7 +186,6 @@
                             <div><label>Night</label><input type="number" id="medNight" min="0" step="0.5" value="0"></div>
                         </div>
                     </div>
-
                     <div id="prn-inputs" class="hidden form-group">
                         <label>PRN Instructions</label><input type="text" id="medPrnInstructions" placeholder="e.g., 1-2 tabs every 4-6 hours">
                     </div>
@@ -234,17 +196,15 @@
 
         <!-- ================= TAB: BLOOD TESTS ================= -->
         <section id="view-bloods" class="hidden">
-            <button class="back-btn" onclick="navigate('view-splash')">← Back to Profile</button>
-            
+            <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
             <h2>Recent Blood Tests</h2>
             <div id="blood-list" class="item-list"></div>
-
             <div class="card">
                 <h2>Add Blood Test</h2>
                 <form id="bloodForm">
                     <div class="form-group"><label>Date of Test</label><input type="date" id="bloodDate" required></div>
                     <div class="form-group"><label>Test Type / Panel</label><input type="text" id="bloodType" placeholder="e.g., Full Blood Count" required></div>
-                    <div class="form-group"><label>Results & Notes</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Iron slightly low. Paste formatted AI tables here."></textarea></div>
+                    <div class="form-group"><label>Results & Notes</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Paste formatted AI tables here."></textarea></div>
                     <button type="submit">+ Add Record</button>
                 </form>
             </div>
@@ -252,11 +212,9 @@
 
         <!-- ================= TAB: APPOINTMENTS ================= -->
         <section id="view-appts" class="hidden">
-            <button class="back-btn" onclick="navigate('view-splash')">← Back to Profile</button>
-            
+            <button class="back-btn" onclick="window.navigate('view-splash')">← Back to Profile</button>
             <h2>Hospital Appointments</h2>
             <div id="appt-list" class="item-list"></div>
-
             <div class="card">
                 <h2>Add Appointment</h2>
                 <form id="apptForm">
@@ -264,32 +222,46 @@
                         <div class="form-group" style="flex: 2;"><label>Date</label><input type="date" id="apptDate" required></div>
                         <div class="form-group" style="flex: 1;"><label>Time</label><input type="time" id="apptTime"></div>
                     </div>
-                    <div class="form-group"><label>Hospital / Clinic</label><input type="text" id="apptLocation" placeholder="e.g., Mayo University Hospital" required></div>
-                    <div class="form-group"><label>Consultant / Dept</label><input type="text" id="apptDept" placeholder="e.g., Cardiology - Dr. Smith"></div>
-                    <div class="form-group"><label>Notes</label><textarea id="apptNotes" rows="2" placeholder="e.g., Fasting from midnight"></textarea></div>
+                    <div class="form-group"><label>Hospital / Clinic</label><input type="text" id="apptLocation" required></div>
+                    <div class="form-group"><label>Consultant / Dept</label><input type="text" id="apptDept"></div>
+                    <div class="form-group"><label>Notes</label><textarea id="apptNotes" rows="2"></textarea></div>
                     <button type="submit">+ Add Appointment</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <script>
-        // --- Multi-User State Management ---
+    <!-- FIREBASE AND APP LOGIC (MODULE SCRIPT) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdfcHazK_TTmNoLByjab9Aegxkd_ve2vo",
+            authDomain: "medrx-8ec4e.firebaseapp.com",
+            projectId: "medrx-8ec4e",
+            storageBucket: "medrx-8ec4e.firebasestorage.app",
+            messagingSenderId: "649441626620",
+            appId: "1:649441626620:web:1c390cdcfcfc62b6600a79"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // State variables
         let currentProfile = 'Aaron';
         let patientData = null;
         let medications = [];
         let bloods = [];
         let appts = [];
         let patientConditions = [];
-        
         const views = ['view-setup', 'view-splash', 'view-meds', 'view-bloods', 'view-appts'];
 
-        // --- Theme Toggle ---
-        const themeBtn = document.getElementById('themeToggle');
+        // --- Theme Logic ---
         let isDark = localStorage.getItem('MedRx_theme') === 'dark';
         if(isDark) document.documentElement.setAttribute('data-theme', 'dark');
 
-        themeBtn.addEventListener('click', () => {
+        window.toggleTheme = function() {
             isDark = !isDark;
             if(isDark) {
                 document.documentElement.setAttribute('data-theme', 'dark');
@@ -298,33 +270,60 @@
                 document.documentElement.removeAttribute('data-theme');
                 localStorage.setItem('MedRx_theme', 'light');
             }
-        });
+        };
 
-        // --- Navigation & Profile Switching ---
-        function navigate(targetView) {
+        // --- Navigation ---
+        window.navigate = function(targetView) {
             views.forEach(v => document.getElementById(v).classList.add('hidden'));
             document.getElementById(targetView).classList.remove('hidden');
             window.scrollTo(0,0);
-        }
+        };
 
-        function switchProfile(name) {
+        window.switchProfile = function(name) {
             currentProfile = name;
-            
-            const tabs = document.querySelectorAll('.family-tab');
-            tabs.forEach(tab => {
+            document.querySelectorAll('.family-tab').forEach(tab => {
                 if(tab.innerText === name) tab.classList.add('active');
                 else tab.classList.remove('active');
             });
+            loadProfileDataFromCloud();
+        };
 
-            loadProfileData();
+        // --- FIREBASE SYNC FUNCTIONS ---
+        async function saveToCloud(key, data) {
+            document.getElementById('cloud-status').textContent = "Saving...";
+            try {
+                await setDoc(doc(db, "familyProfiles", currentProfile), {
+                    [key]: data
+                }, { merge: true });
+                document.getElementById('cloud-status').textContent = "Saved to cloud ☁️";
+            } catch(e) {
+                console.error(e);
+                document.getElementById('cloud-status').textContent = "⚠️ Save failed. Check connection.";
+            }
         }
 
-        function loadProfileData() {
-            patientData = JSON.parse(localStorage.getItem(`MedRx_${currentProfile}_patient`)) || null;
-            medications = JSON.parse(localStorage.getItem(`MedRx_${currentProfile}_meds`)) || [];
-            bloods = JSON.parse(localStorage.getItem(`MedRx_${currentProfile}_bloods`)) || [];
-            appts = JSON.parse(localStorage.getItem(`MedRx_${currentProfile}_appts`)) || [];
-            patientConditions = JSON.parse(localStorage.getItem(`MedRx_${currentProfile}_conditions`)) || [];
+        async function loadProfileDataFromCloud() {
+            document.getElementById('cloud-status').textContent = "Syncing from cloud...";
+            document.getElementById('display-name').textContent = "Loading " + currentProfile + "...";
+            
+            try {
+                const docSnap = await getDoc(doc(db, "familyProfiles", currentProfile));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    patientData = data.patientData || null;
+                    medications = data.medications || [];
+                    bloods = data.bloods || [];
+                    appts = data.appts || [];
+                    patientConditions = data.conditions || [];
+                } else {
+                    // No data in cloud yet
+                    patientData = null; medications = []; bloods = []; appts = []; patientConditions = [];
+                }
+                document.getElementById('cloud-status').textContent = "Synced ☁️";
+            } catch(e) {
+                console.error(e);
+                document.getElementById('cloud-status').textContent = "⚠️ Offline mode (Cloud unreachable)";
+            }
 
             if (patientData) {
                 populateSplash();
@@ -335,12 +334,12 @@
                 document.getElementById('patContactName').value = patientData.contactName || '';
                 document.getElementById('patContactPhone').value = patientData.contactPhone || '';
                 document.getElementById('patAllergies').value = patientData.allergies || '';
-                navigate('view-splash');
+                window.navigate('view-splash');
             } else {
                 document.getElementById('patientForm').reset();
                 document.getElementById('patName').value = currentProfile;
                 document.getElementById('setup-name-display').textContent = currentProfile;
-                navigate('view-setup');
+                window.navigate('view-setup');
             }
 
             renderConditions();
@@ -349,33 +348,7 @@
             renderAppts();
         }
 
-        // --- Splash & Setup ---
-        document.getElementById('patientForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const dobRaw = document.getElementById('patDOB').value;
-            const parts = dobRaw.split('-');
-            const dobFormatted = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dobRaw;
-
-            patientData = {
-                name: document.getElementById('patName').value,
-                dobRaw: dobRaw, dobFormatted: dobFormatted,
-                eircode: document.getElementById('patEircode').value,
-                gp: document.getElementById('patGP').value || 'Not provided',
-                contactName: document.getElementById('patContactName').value || 'Not provided',
-                contactPhone: document.getElementById('patContactPhone').value || '',
-                allergies: document.getElementById('patAllergies').value
-            };
-
-            localStorage.setItem(`MedRx_${currentProfile}_patient`, JSON.stringify(patientData));
-            populateSplash();
-            navigate('view-splash');
-        });
-
-        document.getElementById('editBtn').addEventListener('click', () => {
-            document.getElementById('setup-name-display').textContent = currentProfile;
-            navigate('view-setup');
-        });
-
+        // --- Render Functions ---
         function populateSplash() {
             document.getElementById('display-name').textContent = patientData.name;
             document.getElementById('display-dob').textContent = `DOB: ${patientData.dobFormatted}`;
@@ -400,27 +373,48 @@
             }
         }
 
+        document.getElementById('patientForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const dobRaw = document.getElementById('patDOB').value;
+            const parts = dobRaw.split('-');
+            const dobFormatted = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dobRaw;
+
+            patientData = {
+                name: document.getElementById('patName').value,
+                dobRaw: dobRaw, dobFormatted: dobFormatted,
+                eircode: document.getElementById('patEircode').value,
+                gp: document.getElementById('patGP').value || 'Not provided',
+                contactName: document.getElementById('patContactName').value || 'Not provided',
+                contactPhone: document.getElementById('patContactPhone').value || '',
+                allergies: document.getElementById('patAllergies').value
+            };
+
+            saveToCloud('patientData', patientData);
+            populateSplash();
+            window.navigate('view-splash');
+        });
+
         // --- Conditions ---
-        function addCondition() {
+        window.addCondition = function() {
             const val = document.getElementById('conditionInput').value.trim();
             if (val) {
                 patientConditions.push(val);
-                localStorage.setItem(`MedRx_${currentProfile}_conditions`, JSON.stringify(patientConditions));
-                document.getElementById('conditionInput').value = '';
                 renderConditions();
+                saveToCloud('conditions', patientConditions);
+                document.getElementById('conditionInput').value = '';
             }
         }
-        function removeCondition(i) {
+        window.removeCondition = function(i) {
             patientConditions.splice(i, 1);
-            localStorage.setItem(`MedRx_${currentProfile}_conditions`, JSON.stringify(patientConditions));
             renderConditions();
+            saveToCloud('conditions', patientConditions);
         }
         function renderConditions() {
             const container = document.getElementById('conditionsListForm');
             container.innerHTML = '';
             if(patientConditions.length === 0) container.innerHTML = '<span style="color:var(--text-light);font-size:0.9rem;">No conditions added.</span>';
             patientConditions.forEach((cond, i) => {
-                container.innerHTML += `<div class="condition-tag">${cond} <span style="cursor:pointer;" onclick="removeCondition(${i})">×</span></div>`;
+                container.innerHTML += `<div class="condition-tag">${cond} <span style="cursor:pointer;" onclick="window.removeCondition(${i})">×</span></div>`;
             });
         }
 
@@ -447,19 +441,23 @@
                 night: isPRN ? 0 : parseFloat(document.getElementById('medNight').value),
                 prnInstructions: isPRN ? document.getElementById('medPrnInstructions').value : ''
             });
-            localStorage.setItem(`MedRx_${currentProfile}_meds`, JSON.stringify(medications));
             renderMedications();
+            saveToCloud('medications', medications);
             this.reset();
             isPrnCheckbox.checked = false;
             document.getElementById('scheduled-inputs').classList.remove('hidden');
             document.getElementById('prn-inputs').classList.add('hidden');
         });
 
-        function deleteMedication(id) { medications = medications.filter(m => m.id !== id); localStorage.setItem(`MedRx_${currentProfile}_meds`, JSON.stringify(medications)); renderMedications(); }
+        window.deleteMedication = function(id) { 
+            medications = medications.filter(m => m.id !== id); 
+            renderMedications();
+            saveToCloud('medications', medications); 
+        }
 
         function renderMedications() {
             const list = document.getElementById('med-list');
-            list.innerHTML = medications.length === 0 ? '<div class="empty-state">No meds added for ' + currentProfile + '.</div>' : '';
+            list.innerHTML = medications.length === 0 ? '<div class="empty-state">No meds added.</div>' : '';
             medications.forEach(med => {
                 const layout = med.isPRN 
                     ? `<div class="prn-display-box">Inst: ${med.prnInstructions || 'As Needed'}</div>` 
@@ -471,7 +469,7 @@
                        </div>`;
                 list.innerHTML += `
                     <div class="list-item">
-                        <button class="delete-btn" onclick="deleteMedication(${med.id})">×</button>
+                        <button class="delete-btn" onclick="window.deleteMedication(${med.id})">×</button>
                         <div class="item-title">${med.name} ${med.isPRN ? '<span class="prn-badge">PRN</span>':''}</div>
                         <div class="med-reason-badge">${med.reason}</div>
                         ${layout}
@@ -492,12 +490,16 @@
                 notes: document.getElementById('bloodNotes').value
             });
             bloods.sort((a,b) => new Date(b.date) - new Date(a.date));
-            localStorage.setItem(`MedRx_${currentProfile}_bloods`, JSON.stringify(bloods));
             renderBloods();
+            saveToCloud('bloods', bloods);
             this.reset();
         });
 
-        function deleteBlood(id) { bloods = bloods.filter(b => b.id !== id); localStorage.setItem(`MedRx_${currentProfile}_bloods`, JSON.stringify(bloods)); renderBloods(); }
+        window.deleteBlood = function(id) { 
+            bloods = bloods.filter(b => b.id !== id); 
+            renderBloods(); 
+            saveToCloud('bloods', bloods);
+        }
 
         function renderBloods() {
             const list = document.getElementById('blood-list');
@@ -507,7 +509,7 @@
                 const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : b.date;
                 list.innerHTML += `
                     <div class="list-item" style="border-left-color: #8E44AD;">
-                        <button class="delete-btn" onclick="deleteBlood(${b.id})">×</button>
+                        <button class="delete-btn" onclick="window.deleteBlood(${b.id})">×</button>
                         <div class="item-title" style="color: #8E44AD;">${b.type}</div>
                         <div class="item-meta">📅 ${fmtDate}</div>
                         ${b.notes ? `<div class="item-notes">${b.notes}</div>` : ''}
@@ -527,12 +529,16 @@
                 notes: document.getElementById('apptNotes').value
             });
             appts.sort((a,b) => new Date(a.date) - new Date(b.date));
-            localStorage.setItem(`MedRx_${currentProfile}_appts`, JSON.stringify(appts));
             renderAppts();
+            saveToCloud('appts', appts);
             this.reset();
         });
 
-        function deleteAppt(id) { appts = appts.filter(a => a.id !== id); localStorage.setItem(`MedRx_${currentProfile}_appts`, JSON.stringify(appts)); renderAppts(); }
+        window.deleteAppt = function(id) { 
+            appts = appts.filter(a => a.id !== id); 
+            renderAppts();
+            saveToCloud('appts', appts);
+        }
 
         function renderAppts() {
             const list = document.getElementById('appt-list');
@@ -542,7 +548,7 @@
                 const fmtDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : a.date;
                 list.innerHTML += `
                     <div class="list-item" style="border-left-color: #27AE60;">
-                        <button class="delete-btn" onclick="deleteAppt(${a.id})">×</button>
+                        <button class="delete-btn" onclick="window.deleteAppt(${a.id})">×</button>
                         <div class="item-title" style="color: #27AE60;">${a.location}</div>
                         <div class="item-meta">📅 ${fmtDate} ${a.time ? `| ⏰ ${a.time}` : ''}<br>👨‍⚕️ ${a.dept || 'Not specified'}</div>
                         ${a.notes ? `<div class="item-notes">${a.notes}</div>` : ''}
@@ -559,8 +565,8 @@
             });
         }
 
-        // Start App
-        loadProfileData();
+        // Start App by loading cloud data
+        loadProfileDataFromCloud();
     </script>
 </body>
 </html>
