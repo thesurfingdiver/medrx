@@ -38,10 +38,23 @@
 
         .form-group { margin-bottom: 16px; }
         label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500; color: var(--text-dark); }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1rem; background-color: var(--card-bg); color: var(--text-dark); }
-        input[type="file"] { padding: 6px; background-color: var(--kardex-bg); font-size: 0.85rem; }
-        button { width: 100%; padding: 14px; background-color: var(--primary); color: #FFF; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        button:hover { background-color: var(--primary-hover); }
+        input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="tel"], textarea { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; font-size: 1rem; background-color: var(--card-bg); color: var(--text-dark); }
+        
+        /* Modern File Upload UI */
+        .file-upload-wrapper { position: relative; margin-bottom: 8px; }
+        .file-upload-input { display: none; }
+        .file-upload-label { 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background-color: var(--nav-bg); color: var(--primary); 
+            border: 2px dashed var(--primary); border-radius: 8px; 
+            padding: 14px; cursor: pointer; font-weight: bold; font-size: 1rem;
+            transition: all 0.2s ease; text-align: center; margin: 0;
+        }
+        .file-upload-label:hover { background-color: var(--primary); color: #FFF; border-style: solid; }
+        .file-name-display { display: block; font-size: 0.85rem; color: var(--text-light); text-align: center; margin-top: 4px; min-height: 18px; }
+
+        button[type="submit"], button[type="button"]:not(.back-btn):not(.theme-toggle):not(.delete-btn) { width: 100%; padding: 14px; background-color: var(--primary); color: #FFF; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button[type="submit"]:hover, button[type="button"]:not(.back-btn):not(.theme-toggle):not(.delete-btn):hover { background-color: var(--primary-hover); }
         .btn-secondary { background-color: transparent; color: var(--text-light); border: 1px solid var(--input-border); padding: 8px; font-size: 0.85rem; margin-top: 12px; }
 
         .nav-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
@@ -135,7 +148,7 @@
                     <div class="info-box"><span style="color: var(--text-light); font-size: 0.8rem; text-transform: uppercase;">Contact</span><br><strong id="display-contact-name"></strong><br><a id="display-contact-phone" style="color: var(--primary); text-decoration: none;"></a></div>
                 </div>
                 <div id="display-allergies" class="alert-box hidden"></div>
-                <button onclick="window.navigate('view-setup')" class="btn-secondary">Edit Details</button>
+                <button onclick="window.navigate('view-setup')" class="btn-secondary" style="width:100%;">Edit Details</button>
             </div>
 
             <div class="nav-grid">
@@ -155,7 +168,13 @@
                     <label>Add Condition & Optional Photo</label>
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                         <input type="text" id="conditionInput" placeholder="e.g. Eczema, Asthma">
-                        <input type="file" id="conditionFile" accept="image/*">
+                        
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="conditionFile" class="file-upload-input" accept="image/*" onchange="window.updateFileName(this, 'conditionFileName')">
+                            <label for="conditionFile" class="file-upload-label">📸 Tap to Add Photo</label>
+                            <span id="conditionFileName" class="file-name-display"></span>
+                        </div>
+
                         <button type="button" onclick="window.addCondition()">Add to History</button>
                     </div>
                 </div>
@@ -173,7 +192,11 @@
                     
                     <div class="form-group">
                         <label>Photo of Medication / Box (Optional)</label>
-                        <input type="file" id="medFile" accept="image/*">
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="medFile" class="file-upload-input" accept="image/*" onchange="window.updateFileName(this, 'medFileName')">
+                            <label for="medFile" class="file-upload-label">📸 Tap to Photo</label>
+                            <span id="medFileName" class="file-name-display"></span>
+                        </div>
                     </div>
 
                     <div style="display: flex; gap: 12px; margin-bottom: 16px;">
@@ -211,7 +234,11 @@
                     
                     <div class="form-group">
                         <label>Attach PDF or Photo of Results (Optional)</label>
-                        <input type="file" id="bloodFile" accept="image/*,application/pdf">
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="bloodFile" class="file-upload-input" accept="image/*,application/pdf" onchange="window.updateFileName(this, 'bloodFileName')">
+                            <label for="bloodFile" class="file-upload-label">📎 Tap to Attach File</label>
+                            <span id="bloodFileName" class="file-name-display"></span>
+                        </div>
                     </div>
 
                     <div class="form-group"><label>Notes (or Paste AI Table)</label><textarea id="bloodNotes" rows="4" placeholder="e.g., Doctor said Iron is improving."></textarea></div>
@@ -297,6 +324,17 @@
             loadProfileDataFromCloud();
         };
 
+        // --- UI HELPER: Update File Name Display ---
+        window.updateFileName = function(input, displayId) {
+            const display = document.getElementById(displayId);
+            if (input.files && input.files.length > 0) {
+                display.textContent = "✅ " + input.files[0].name;
+                display.style.color = "var(--success)";
+            } else {
+                display.textContent = "";
+            }
+        };
+
         // --- CLOUD SYNC & FILE UPLOAD ---
         async function saveToCloud(key, data) {
             try {
@@ -329,8 +367,6 @@
                     medications = data.medications || [];
                     bloods = data.bloods || [];
                     appts = data.appts || [];
-                    
-                    // Migration: convert old string conditions to new object format
                     let rawConditions = data.conditions || [];
                     patientConditions = rawConditions.map(c => typeof c === 'string' ? { id: Date.now()+Math.random(), name: c, fileUrl: null } : c);
                 } else {
@@ -419,7 +455,7 @@
                 patientConditions.push({ id: Date.now(), name: val || 'Condition / Note', fileUrl: fileUrl });
                 renderConditions();
                 saveToCloud('conditions', patientConditions);
-                input.value = ''; fileInput.value = '';
+                input.value = ''; fileInput.value = ''; document.getElementById('conditionFileName').textContent = '';
             }
         }
 
@@ -472,6 +508,7 @@
             isPrnCheckbox.checked = false;
             document.getElementById('scheduled-inputs').classList.remove('hidden');
             document.getElementById('prn-inputs').classList.add('hidden');
+            document.getElementById('medFileName').textContent = '';
         });
 
         window.deleteMedication = function(id) { medications = medications.filter(m => m.id !== id); renderMedications(); saveToCloud('medications', medications); }
@@ -513,6 +550,7 @@
             renderBloods();
             saveToCloud('bloods', bloods);
             this.reset();
+            document.getElementById('bloodFileName').textContent = '';
         });
 
         window.deleteBlood = function(id) { bloods = bloods.filter(b => b.id !== id); renderBloods(); saveToCloud('bloods', bloods); }
